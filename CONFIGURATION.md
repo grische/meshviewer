@@ -204,6 +204,32 @@ The UID is visible in the browser URL: `/datasources/edit/{uid}`.
 - `color` — any CSS color value, e.g. `"#73BF69"`
 - `negate` — set `true` to flip the sign, e.g. for TX on a combined RX/TX chart
 
+### Multiple series from a `GROUP BY` tag (InfluxDB `ALIAS BY`)
+
+A query that groups by a tag (e.g. `GROUP BY time($interval), "domain"`) returns one
+series per tag value. InfluxDB names those series after the measurement/field by default,
+so the chart cannot tell them apart. Set the optional `alias` field to InfluxDB's
+`ALIAS BY` pattern — e.g. `"$tag_domain"` — to name each series after its tag value.
+
+The example below is a `globalCharts` entry showing the total number of clients per domain
+(adapted from the Freifunk München production deployment):
+
+```json
+  "globalCharts": [
+    {
+      "name": "Clients per Domain",
+      "datasourceUid": "abc123xyz",
+      "datasourceType": "influxdb",
+      "query": "SELECT mean(\"clients.total\") FROM \"global_site_domain\" WHERE $timeFilter GROUP BY time($interval), \"domain\" fill(null)",
+      "alias": "$tag_domain",                   # InfluxDB ALIAS BY: names each series after its "domain" tag value
+      "format": ".0f"
+    }
+  ],
+```
+
+The number of series is dynamic (one per domain), so `series[]` is usually omitted here —
+each series is auto-assigned a colour. `alias` is ignored for single-series queries.
+
 ## Global Infos
 
 TODO
