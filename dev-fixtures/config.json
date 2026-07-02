@@ -41,6 +41,14 @@
       "query": "alias(sum(node_clients.total), \"Clients\")",
       "format": ".0f",
       "series": [{ "name": "Clients", "color": "#73BF69" }]
+    },
+    {
+      "name": "Clients per Domain",
+      "datasourceUid": "grafana-global-domains.json",
+      "datasourceType": "fixture",
+      "query": "SELECT mean(\"clients.total\") FROM \"global_site_domain\" WHERE $timeFilter GROUP BY time($interval), \"domain\" fill(null)",
+      "alias": "$tag_domain",
+      "format": ".0f"
     }
   ],
   "fixedCenter": [

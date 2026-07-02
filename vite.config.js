@@ -32,6 +32,10 @@ function devFixturesPlugin() {
       filePath: resolve(fixtureRoot, "grafana-global.json"),
       contentType: "application/json; charset=utf-8",
     },
+    "/grafana-global-domains.json": {
+      filePath: resolve(fixtureRoot, "grafana-global-domains.json"),
+      contentType: "application/json; charset=utf-8",
+    },
   };
 
   return {

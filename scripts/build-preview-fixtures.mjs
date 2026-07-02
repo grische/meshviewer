@@ -25,7 +25,12 @@ if (prTitle) {
 }
 writeFileSync(resolve(buildRoot, "config.json"), JSON.stringify(config, null, 2));
 
-for (const fixture of ["grafana-node.json", "grafana-link.json", "grafana-global.json"]) {
+for (const fixture of [
+  "grafana-node.json",
+  "grafana-link.json",
+  "grafana-global.json",
+  "grafana-global-domains.json",
+]) {
   copyFileSync(resolve(fixtureRoot, fixture), resolve(buildRoot, fixture));
 }
 
